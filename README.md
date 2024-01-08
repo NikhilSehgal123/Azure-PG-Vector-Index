@@ -14,12 +14,12 @@ This repository contains the simplest way to setup and interact with a vector da
 - Azure PostgreSQL database with `pgvector` extension enabled.
 - Python environment with the required packages installed.
 
-### Installation
+### Installation
 ```bash
 pip install -r requirements.txt
 ```
 
-### Configuration
+### Configuration
 1. Open the `vector_database.py` file.
 2. Fill in the `DB_PARAMS` dictionary with your database credentials.
 
