@@ -23,7 +23,6 @@ pip install -r requirements.txt
 1. Open the `vector_database.py` file.
 2. Fill in the `DB_PARAMS` dictionary with your database credentials.
 
-## Usage
 ### Create an index
 Creates an index for storing vectors and metadata.
 
