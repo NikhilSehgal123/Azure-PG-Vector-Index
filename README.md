@@ -30,7 +30,7 @@ Creates an index for storing vectors and metadata.
 from vector_database import create_index
 
 # Create an index with dimension of 1536
-create_index(name='my_vector_index', dimension_size=1536)
+table_name = create_index(name='my_vector_index', dimension_size=1536)
 ```
 
 ### Upsert vectors
@@ -46,7 +46,7 @@ example_vectors = [
     (3, [0.3] * 1536, json.dumps({"description": "Vector 3"})),
     (4, [0.4] * 1536, json.dumps({"description": "Vector 4"}))
 ]
-upsert_vectors(example_vectors)
+upsert_vectors(table_name, example_vectors)
 ```
 
 ### Query vectors
@@ -54,5 +54,5 @@ upsert_vectors(example_vectors)
 from vector_database import query_vectors
 
 # Query vectors
-query_results = query_vector([0.15] * 1536, limit=1)
+query_results = query_vector(table_name, [0.15] * 1536, limit=1)
 ```

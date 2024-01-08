@@ -35,26 +35,27 @@ def create_index(name, dimension_size):
         ''')
         conn.commit()
     conn.close()
+    return name  # Return the name of the table
 
 # Function to upsert one or more vectors
-def upsert_vectors(vectors):
+def upsert_vectors(table_name, vectors):  # Add table_name parameter
     conn = get_db_connection()
     with conn.cursor() as cur:
-        psycopg2.extras.execute_batch(cur, '''
-        INSERT INTO tblvector (id, embedding, metadata) VALUES (%s, %s, %s)
+        psycopg2.extras.execute_batch(cur, f'''
+        INSERT INTO {table_name} (id, embedding, metadata) VALUES (%s, %s, %s)
         ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding, metadata = EXCLUDED.metadata;
         ''', vectors)
         conn.commit()
     conn.close()
 
 # Function to query a given vector against the vectors stored in the DB
-def query_vector(input_vector, limit=5):
+def query_vector(table_name, input_vector, limit=5):  # Add table_name parameter
     conn = get_db_connection()
     with conn.cursor() as cur:
         input_vector_str = ','.join(map(str, input_vector))
         input_vector_formatted = f"'[{input_vector_str}]'"
         cur.execute(f'''
-        SELECT id, embedding, metadata FROM tblvector
+        SELECT id, embedding, metadata FROM {table_name}
         ORDER BY embedding <-> {input_vector_formatted}
         LIMIT {limit};
         ''')
